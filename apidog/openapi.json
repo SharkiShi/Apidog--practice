@@ -1,0 +1,3126 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "学习阶段",
+    "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    "version": "1.0.0",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "TAG1"
+    },
+    {
+      "name": "pet"
+    },
+    {
+      "name": "store"
+    },
+    {
+      "name": "user"
+    }
+  ],
+  "paths": {
+    "/test/put": {
+      "put": {
+        "summary": "put 请求 - json",
+        "deprecated": false,
+        "description": "",
+        "operationId": "updatePet",
+        "tags": [
+          "TAG1"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/test/get": {
+      "get": {
+        "summary": "get请求 - schema嵌套",
+        "deprecated": true,
+        "description": "Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+        "operationId": "findPetsByTags",
+        "tags": [
+          "TAG1"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "ID of pet that needs to be updated",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "required": [
+                      "name",
+                      "photoUrls"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "category": {
+                        "$ref": "#/components/schemas/Category"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "doggie"
+                      },
+                      "photoUrls": {
+                        "type": "array",
+                        "xml": {
+                          "name": "photoUrl",
+                          "wrapped": true
+                        },
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "tags": {
+                        "type": "array",
+                        "xml": {
+                          "name": "tag",
+                          "wrapped": true
+                        },
+                        "items": {
+                          "$ref": "#/components/schemas/Tag"
+                        }
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "pet status in the store",
+                        "enum": [
+                          "available",
+                          "pending",
+                          "sold"
+                        ]
+                      }
+                    },
+                    "xml": {
+                      "name": "Pet"
+                    }
+                  }
+                },
+                "example": {
+                  "name": "my-name",
+                  "photoUrls": [
+                    "http://petstore.swagger.io/url1",
+                    "http://petstore.swagger.io/url2"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/pet/{petId}": {
+      "post": {
+        "summary": "Updates a pet in the store with form data.",
+        "deprecated": false,
+        "description": "Updates a pet resource based on the form data.",
+        "operationId": "updatePetWithForm",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "ID of pet that needs to be updated",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of pet that needs to be updated",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of pet that needs to be updated",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid input",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "summary": "Find pet by ID.",
+        "deprecated": false,
+        "description": "Returns a single pet.",
+        "operationId": "getPetById",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "headers": {}
+          },
+          "404": {
+            "description": "Pet not found",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a pet.",
+        "deprecated": false,
+        "description": "Delete a pet.",
+        "operationId": "deletePet",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "Pet id to delete",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pet deleted",
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid pet value",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/pet/{petId}/uploadImage": {
+      "post": {
+        "summary": "Uploads an image.",
+        "deprecated": false,
+        "description": "Upload image of the pet.",
+        "operationId": "uploadFile",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "ID of pet to update",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "additionalMetadata",
+            "in": "query",
+            "description": "Additional Metadata",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "No file uploaded",
+            "headers": {}
+          },
+          "404": {
+            "description": "Pet not found",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "查找用户列表（获取所有用户）",
+        "deprecated": false,
+        "description": "返回所有用户的列表",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "timestamp",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user_info"
+                  },
+                  "minItems": 5
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Success",
+                    "value": {
+                      "id": 29,
+                      "username": "庞乙萍",
+                      "email": "ts5hvb61@gmail.com",
+                      "register_date": "2026-06-29"
+                    }
+                  },
+                  "2": {
+                    "summary": "Success",
+                    "value": {
+                      "id": 46,
+                      "username": "资乙萍",
+                      "email": "p72k3d65@126.com",
+                      "register_date": "2025-07-16"
+                    }
+                  },
+                  "3": {
+                    "summary": "Success",
+                    "value": {
+                      "id": 65,
+                      "username": "潮国栋",
+                      "email": "v9rlnf57@yeah.net",
+                      "register_date": "2026-01-26"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "添加新用户",
+        "deprecated": false,
+        "description": "创建一个新用户\n⚠️注意：此场景参数应放在body中",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "ID 编号",
+                    "type": "string",
+                    "example": ""
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "timestamp": {
+                    "example": "",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "username",
+                  "email"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user_info"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "status": "success",
+                  "message": "用户{{username}}已成功创建",
+                  "data": {
+                    "id": 69,
+                    "username": "程鑫",
+                    "email": "l7nrqi.q0b24@yahoo.cn",
+                    "register_date": "2025-03-13"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "查找特定用户",
+        "deprecated": false,
+        "description": "依据用户id查找特定用户",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户id",
+            "required": true,
+            "example": "1624131019",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID 编号"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "名称"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "register_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "username",
+                    "email",
+                    "register_date"
+                  ]
+                },
+                "example": {
+                  "id": 36,
+                  "username": "有志国",
+                  "email": "lm1_ilp6@yeah.net",
+                  "register_date": "2025-01-10"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "更新用户信息",
+        "deprecated": false,
+        "description": "依据用户id更新用户信息",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": ""
+                  }
+                },
+                "required": [
+                  "username"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "保持不变的ID"
+                        },
+                        "username": {
+                          "description": "更新后的字段",
+                          "type": "string"
+                        },
+                        "email": {
+                          "description": "更新后的字段",
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "description": "不变的创建时间",
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "description": "服务器生成的更新时间",
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "username",
+                        "email",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "message": "用户信息更新成功",
+                  "data": {
+                    "id": "12345",
+                    "username": "zhang cheng",
+                    "email": "zhangsan_new@example.com",
+                    "createdAt": "2023-10-01T12:00:00Z",
+                    "updatedAt": "2023-10-02T14:30:00Z"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除用户",
+        "deprecated": false,
+        "description": "根据user_id，删除指定用户",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "被删除的资源ID（用于客户端确认）"
+                        },
+                        "deletedAt": {
+                          "description": "删除时间（可选）",
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "message": "用户已成功删除",
+                  "data": {
+                    "id": "12345",
+                    "deletedAt": "2025-08-11T12:00:00Z"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "message": "用户已成功删除",
+                  "data": {
+                    "id": "12345",
+                    "deletedAt": "2025-08-11T12:00:00Z"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/pet": {
+      "put": {
+        "summary": "Update an existing pet.",
+        "deprecated": false,
+        "description": "Update an existing pet by Id.",
+        "operationId": "updatePet",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "headers": {}
+          },
+          "404": {
+            "description": "Pet not found",
+            "headers": {}
+          },
+          "422": {
+            "description": "Validation exception",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add a new pet to the store.",
+        "deprecated": false,
+        "description": "Add a new pet to the store.",
+        "operationId": "addPet",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid input",
+            "headers": {}
+          },
+          "422": {
+            "description": "Validation exception",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/pet/findByStatus": {
+      "get": {
+        "summary": "Finds Pets by status.",
+        "deprecated": false,
+        "description": "Multiple status values can be provided with comma separated strings.",
+        "operationId": "findPetsByStatus",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status values that need to be considered for filter",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "available",
+              "enum": [
+                "available",
+                "pending",
+                "sold"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pet"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pet"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid status value",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/pet/findByTags": {
+      "get": {
+        "summary": "Finds Pets by tags.",
+        "deprecated": false,
+        "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+        "operationId": "findPetsByTags",
+        "tags": [
+          "pet"
+        ],
+        "parameters": [
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Tags to filter by",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pet"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pet"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid tag value",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/store/inventory": {
+      "get": {
+        "summary": "Returns pet inventories by status.",
+        "deprecated": false,
+        "description": "Returns a map of status codes to quantities.",
+        "operationId": "getInventory",
+        "tags": [
+          "store"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/store/order": {
+      "post": {
+        "summary": "Place an order for a pet.",
+        "deprecated": false,
+        "description": "Place a new order in the store.",
+        "operationId": "placeOrder",
+        "tags": [
+          "store"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid input",
+            "headers": {}
+          },
+          "422": {
+            "description": "Validation exception",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/store/order/{orderId}": {
+      "get": {
+        "summary": "Find purchase order by ID.",
+        "deprecated": false,
+        "description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
+        "operationId": "getOrderById",
+        "tags": [
+          "store"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "ID of order that needs to be fetched",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "headers": {}
+          },
+          "404": {
+            "description": "Order not found",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Delete purchase order by identifier.",
+        "deprecated": false,
+        "description": "For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.",
+        "operationId": "deleteOrder",
+        "tags": [
+          "store"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "ID of the order that needs to be deleted",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order deleted",
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "headers": {}
+          },
+          "404": {
+            "description": "Order not found",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Create user.",
+        "deprecated": false,
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/createWithList": {
+      "post": {
+        "summary": "Creates list of users with given input array.",
+        "deprecated": false,
+        "description": "Creates list of users with given input array.",
+        "operationId": "createUsersWithListInput",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/login": {
+      "get": {
+        "summary": "Logs user into the system.",
+        "deprecated": false,
+        "description": "Log into the system.",
+        "operationId": "loginUser",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "headers": {
+              "X-Rate-Limit": {
+                "required": false,
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "required": false,
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "summary": "Logs out current logged in user session.",
+        "deprecated": false,
+        "description": "Log user out of the system.",
+        "operationId": "logoutUser",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/{username}": {
+      "get": {
+        "summary": "Get user by user name.",
+        "deprecated": false,
+        "description": "Get user detail based on username.",
+        "operationId": "getUserByName",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid username supplied",
+            "headers": {}
+          },
+          "404": {
+            "description": "User not found",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "Update user resource.",
+        "deprecated": false,
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "name that need to be deleted",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {}
+          },
+          "400": {
+            "description": "bad request",
+            "headers": {}
+          },
+          "404": {
+            "description": "user not found",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Delete user resource.",
+        "deprecated": false,
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteUser",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted",
+            "headers": {}
+          },
+          "400": {
+            "description": "Invalid username supplied",
+            "headers": {}
+          },
+          "404": {
+            "description": "User not found",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/createWithArray": {
+      "post": {
+        "summary": "Creates list of users with given input array",
+        "deprecated": false,
+        "description": "",
+        "operationId": "createUsersWithArrayInput",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserArray"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/search/repositories": {
+      "get": {
+        "summary": "GitHub Search API：仓库 “repository”",
+        "deprecated": false,
+        "description": "首先第一步，获得Github的API，得到需要的信息\nGithub API官方文档：https://docs.github.com/en/rest/search\n\n请求参数文档说明：https://docs.github.com/en/search-github/getting-started-with-searching-on-github/understanding-the-search-syntax\n\n\n注意⚠️：\n1. 此处的搜索依据为 GitHub 仓库 “repository”\n2. 搜索结果的日期限制：最近1天内生成的\n",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "Apidog+created:>={{$date.recent(days=1)}}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "updated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "desc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "maximum": 100
+            }
+          },
+          {
+            "name": "advanced_search",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "application/vnd.github+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/search/issues": {
+      "get": {
+        "summary": "GitHub Search API：Issue",
+        "deprecated": false,
+        "description": "获取 Github 上 “Issues” 类别中关于 Apidog 的条目，日期限定范围为1天内\n\nGitHub 官方文档 - Issue 介绍：https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "Apidog+created:>={{$date.recent(days=1)}}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "best match",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "desc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "30",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/search/commits": {
+      "get": {
+        "summary": "GitHub Search API：Commits",
+        "deprecated": false,
+        "description": "获取 Github 上 “Commits” 类别中关于 Apidog 的条目，日期限定范围为1天内",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "Apidog",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "committer-date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "desc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "30",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "application/vnd.github+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/open-apis/bot/v2/hook/67df76a5-c35b-46b3-bcb2-37fccde16f31": {
+      "post": {
+        "summary": "飞书API：自定义机器人",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msg_type": {
+                    "type": "string"
+                  },
+                  "card": {
+                    "type": "object",
+                    "properties": {
+                      "elements": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "tag": {
+                              "type": "string"
+                            },
+                            "content": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": [
+                      "elements"
+                    ]
+                  }
+                },
+                "required": [
+                  "msg_type",
+                  "card"
+                ]
+              },
+              "example": {
+                "msg_type": "text",
+                "content": {
+                  "text": "测试一下：Hello，群里大家好！"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/open-apis/authen/v2/oauth/token": {
+      "post": {
+        "summary": "飞书API：获取并刷新user_access_token",
+        "deprecated": true,
+        "description": "获取user_access_token: https://open.feishu.cn/document/authentication-management/access-token/get-user-access-token \n\n关于请求参数“code” - 获取授权码：https://open.feishu.cn/document/authentication-management/access-token/obtain-oauth-code",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json; charset=utf-8",
+            "schema": {
+              "type": "string",
+              "default": "application/json; charset=utf-8"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "description": "App ID",
+                    "default": "cli_a840c7597e92100e",
+                    "const": "cli_a840c7597e92100e"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "description": "App Secret",
+                    "default": "jTY0PF8gDxspd0YgHQyWIekKyglpgSF1",
+                    "const": "jTY0PF8gDxspd0YgHQyWIekKyglpgSF1"
+                  },
+                  "code": {
+                    "type": "string",
+                    "default": "jTY0PF8gDxspd0YgHQyWIekKyglpgSF1"
+                  },
+                  "redirect_uri": {
+                    "type": "string"
+                  },
+                  "code_verifier": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "grant_type",
+                  "client_secret",
+                  "code",
+                  "code_verifier",
+                  "client_id"
+                ]
+              },
+              "example": {
+                "grant_type": "authorization_code",
+                "client_id": "cli_a5ca35a685b0x26e",
+                "client_secret": "baBqE5um9LbFGDy3X7LcfxQX1sqpXlwy",
+                "code": "a61hb967bd094dge949h79bbexd16dfe",
+                "redirect_uri": "https://example.com/api/oauth/callback",
+                "code_verifier": "TxYmzM4PHLBlqm5NtnCmwxMH8mFlRWl_ipie3O0aVzo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "错误码，非0时表失败"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "description": "即为user_access_token，仅在请求成功时返回"
+                    },
+                    "expires_in": {
+                      "description": "非固定值，请务必根据响应体中返回的实际值来确定 access_token 的有效期",
+                      "type": "integer"
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "用于刷新 user_access_token，仅在请求成功且用户授予 offline_access 权限时返回。"
+                    },
+                    "refresh_token_expires_in": {
+                      "description": "非固定值，请务必根据响应体中返回的实际值来确定 refresh_token 的有效期",
+                      "type": "integer"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "default": "Bearer",
+                      "description": "仅在请求成功时返回"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "description": "本次请求所获得的 access_token 所具备的权限列表，以空格分隔，仅在请求成功时返回"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "access_token",
+                    "expires_in",
+                    "refresh_token",
+                    "refresh_token_expires_in",
+                    "scope",
+                    "token_type"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "access_token": "eyJhbGciOiJFUzI1NiIs**********X6wrZHYKDxJkWwhdkrYg",
+                  "expires_in": 7200,
+                  "refresh_token": "eyJhbGciOiJFUzI1NiIs**********XXOYOZz1mfgIYHwM8ZJA",
+                  "refresh_token_expires_in": 604800,
+                  "scope": "auth:user.id:read offline_access task:task:read user_profile",
+                  "token_type": "Bearer"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "error_description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "error",
+                    "error_description"
+                  ]
+                },
+                "example": {
+                  "code": 20050,
+                  "error": "server_error",
+                  "error_description": "An unexpected server error occurred. Please retry your request."
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/open-apis/im/v1/messages": {
+      "post": {
+        "summary": "飞书API：发送消息卡片",
+        "deprecated": true,
+        "description": "飞书官方文档：https://open.feishu.cn/document/server-docs/im-v1/message/create?appId=cli_a840c7597e92100e\n\n将从GitHub API上获得的信息通过飞书API发送到群聊\n\n关于获取用户的 Open ID：https://open.feishu.cn/document/faq/trouble-shooting/how-to-obtain-openid",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "receive_id_type",
+            "in": "query",
+            "description": "用户 ID 类型/群聊 ID",
+            "required": true,
+            "example": "chat_id",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open_id",
+                "union_id",
+                "user_id",
+                "chat_id",
+                "email"
+              ]
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json; charset=utf-8",
+            "schema": {
+              "type": "string",
+              "default": "application/json; charset=utf-8"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "receive_id": {
+                    "type": "string"
+                  },
+                  "msg_type": {
+                    "type": "string",
+                    "enum": [
+                      "text",
+                      "post",
+                      "image",
+                      "file",
+                      "audio",
+                      "media",
+                      "sticker",
+                      "interactive",
+                      "share_chat",
+                      "share_user",
+                      "system"
+                    ]
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "uuid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "receive_id",
+                  "msg_type",
+                  "content"
+                ]
+              },
+              "example": {
+                "receive_id": "ou_7d8a6e6df7621556ce0d21922b676706ccs",
+                "msg_type": "text",
+                "content": "{\"text\":\"test content\"}",
+                "uuid": "选填，每次调用前请更换，如a0d69e20-1dd1-458b-k525-dfeca4015204"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message_id": {
+                          "type": "string"
+                        },
+                        "root_id": {
+                          "type": "string"
+                        },
+                        "parent_id": {
+                          "type": "string"
+                        },
+                        "thread_id": {
+                          "type": "string"
+                        },
+                        "msg_type": {
+                          "type": "string"
+                        },
+                        "create_time": {
+                          "type": "string"
+                        },
+                        "update_time": {
+                          "type": "string"
+                        },
+                        "deleted": {
+                          "type": "boolean"
+                        },
+                        "updated": {
+                          "type": "boolean"
+                        },
+                        "chat_id": {
+                          "type": "string"
+                        },
+                        "sender": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "id_type": {
+                              "type": "string"
+                            },
+                            "sender_type": {
+                              "type": "string"
+                            },
+                            "tenant_key": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "id_type",
+                            "sender_type",
+                            "tenant_key"
+                          ]
+                        },
+                        "body": {
+                          "type": "object",
+                          "properties": {
+                            "content": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "content"
+                          ]
+                        },
+                        "mentions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "id_type": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "tenant_key": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "upper_message_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "message_id",
+                        "root_id",
+                        "parent_id",
+                        "thread_id",
+                        "msg_type",
+                        "create_time",
+                        "update_time",
+                        "deleted",
+                        "updated",
+                        "chat_id",
+                        "sender",
+                        "body",
+                        "mentions",
+                        "upper_message_id"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "success",
+                  "data": {
+                    "message_id": "om_dc13264520392913993dd051dba21dcf",
+                    "root_id": "om_40eb06e7b84dc71c03e009ad3c754195",
+                    "parent_id": "om_d4be107c616aed9c1da8ed8068570a9f",
+                    "thread_id": "omt_d4be107c616a",
+                    "msg_type": "interactive",
+                    "create_time": "1615380573411",
+                    "update_time": "1615380573411",
+                    "deleted": false,
+                    "updated": false,
+                    "chat_id": "oc_5ad11d72b830411d72b836c20",
+                    "sender": {
+                      "id": "cli_9f427eec54ae901b",
+                      "id_type": "app_id",
+                      "sender_type": "app",
+                      "tenant_key": "736588c9260f175e"
+                    },
+                    "body": {
+                      "content": "{\"text\":\"@_user_1 test content\"}"
+                    },
+                    "mentions": [
+                      {
+                        "key": "@_user_1",
+                        "id": "ou_155184d1e73cbfb8973e5a9e698e74f2",
+                        "id_type": "open_id",
+                        "name": "Tom",
+                        "tenant_key": "736588c9260f175e"
+                      }
+                    ],
+                    "upper_message_id": "om_40eb06e7b84dc71c03e009ad3c754195"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/chat/completions": {
+      "post": {
+        "summary": "DeepSeek",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "content"
+                      ]
+                    }
+                  },
+                  "stream": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "model",
+                  "messages",
+                  "stream"
+                ]
+              },
+              "example": {
+                "model": "deepseek-chat",
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are a helpful assistant."
+                  },
+                  {
+                    "role": "user",
+                    "content": "Hello!"
+                  }
+                ],
+                "stream": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/student/{id}": {
+      "get": {
+        "summary": "查找学生",
+        "deprecated": false,
+        "description": "依据id查找特定学生",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1000000000,
+              "maximum": 9999999999,
+              "example": 1624131019
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "required": [
+                  "01K4PGZ64JW827C1S3AP401EZD"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 1000000000,
+                      "maximum": 9999999999,
+                      "title": "学号"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "gender": {
+                      "type": "string"
+                    },
+                    "birthday": {
+                      "type": "string"
+                    },
+                    "joinAt": {
+                      "type": "string"
+                    },
+                    "class": {
+                      "type": "string",
+                      "example": " Grade 3 Class 4"
+                    },
+                    "grade": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10,
+                      "format": "int64",
+                      "title": "年级",
+                      "example": 3
+                    },
+                    "level": {
+                      "type": "string",
+                      "title": "等级",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "example": "A"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "gender",
+                    "birthday",
+                    "joinAt",
+                    "class",
+                    "grade",
+                    "level"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/compatible-mode/v1/chat/completions": {
+      "post": {
+        "summary": "SSE 请求进阶学习",
+        "deprecated": true,
+        "description": "用的是阿里云的链接🔗，但key是DeepSeek 官方申请的key，不太行",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "stream": {
+                    "type": "boolean"
+                  },
+                  "stream_options": {
+                    "type": "object",
+                    "properties": {
+                      "include_usage": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "include_usage"
+                    ]
+                  },
+                  "enable_thinking": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "model",
+                  "messages",
+                  "stream",
+                  "stream_options",
+                  "enable_thinking"
+                ]
+              },
+              "example": {
+                "model": "deepseek-v3.1",
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "你是谁"
+                  }
+                ],
+                "stream": true,
+                "stream_options": {
+                  "include_usage": true
+                },
+                "enable_thinking": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/pets": {
+      "get": {
+        "summary": "查询宠物列表（Mock脚本try）",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 300
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": 20,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Pet"
+                      }
+                    },
+                    "page": {
+                      "type": "integer",
+                      "maximum": 300,
+                      "minimum": 1,
+                      "title": "当前列表页"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "title": "总列表页数",
+                      "minimum": 1,
+                      "maximum": 300
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "page",
+                    "total"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "user_info": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID 编号"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名"
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱"
+          },
+          "register_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "注册日期"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "email",
+          "register_date"
+        ]
+      },
+      "Pet": {
+        "required": [
+          "name",
+          "photoUrls"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "example": "doggie"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "photoUrls": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "items": {
+              "type": "string",
+              "xml": {
+                "name": "photoUrl"
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "pet status in the store",
+            "enum": [
+              "available",
+              "pending",
+              "sold"
+            ]
+          }
+        },
+        "xml": {
+          "name": "pet"
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Dogs"
+          }
+        },
+        "xml": {
+          "name": "category"
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "tag"
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "petId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 198772
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "example": 7
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Order Status",
+            "enum": [
+              "placed",
+              "approved",
+              "delivered"
+            ],
+            "example": "approved"
+          },
+          "complete": {
+            "type": "boolean"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "phone": {
+            "type": "string",
+            "example": "12345"
+          },
+          "userStatus": {
+            "type": "integer",
+            "description": "User Status",
+            "format": "int32",
+            "example": 1
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "UserArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      },
+      "student info": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1000000000,
+            "maximum": 9999999999,
+            "title": "学号"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string"
+          },
+          "joinAt": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string",
+            "example": " Grade 3 Class 4"
+          },
+          "grade": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "format": "int64",
+            "title": "年级",
+            "example": 3
+          },
+          "level": {
+            "type": "string",
+            "title": "等级",
+            "maxLength": 1,
+            "minLength": 1,
+            "example": "A"
+          }
+        },
+        "required": [
+          "name",
+          "gender",
+          "birthday",
+          "joinAt",
+          "class",
+          "level",
+          "grade",
+          "id"
+        ]
+      }
+    },
+    "responses": {
+      "Record not found": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "Invalid input": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      },
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [],
+  "security": []
+}
