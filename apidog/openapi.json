@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "学习阶段100",
-    "description": "This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    "title": "学习阶段",
+    "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
     "version": "1.0.0",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
@@ -427,462 +427,6 @@
             ]
           }
         ]
-      }
-    },
-    "/users": {
-      "get": {
-        "summary": "查找用户列表（获取所有用户）",
-        "deprecated": false,
-        "description": "返回所有用户的列表",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "timestamp",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/user_info"
-                  },
-                  "minItems": 5
-                },
-                "examples": {
-                  "1": {
-                    "summary": "Success",
-                    "value": {
-                      "id": 29,
-                      "username": "庞乙萍",
-                      "email": "ts5hvb61@gmail.com",
-                      "register_date": "2026-06-29"
-                    }
-                  },
-                  "2": {
-                    "summary": "Success",
-                    "value": {
-                      "id": 46,
-                      "username": "资乙萍",
-                      "email": "p72k3d65@126.com",
-                      "register_date": "2025-07-16"
-                    }
-                  },
-                  "3": {
-                    "summary": "Success",
-                    "value": {
-                      "id": 65,
-                      "username": "潮国栋",
-                      "email": "v9rlnf57@yeah.net",
-                      "register_date": "2026-01-26"
-                    }
-                  }
-                }
-              }
-            },
-            "headers": {}
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "message"
-                  ]
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      },
-      "post": {
-        "summary": "添加新用户",
-        "deprecated": false,
-        "description": "创建一个新用户\n⚠️注意：此场景参数应放在body中",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "description": "ID 编号",
-                    "type": "string",
-                    "example": ""
-                  },
-                  "username": {
-                    "type": "string",
-                    "example": ""
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": ""
-                  },
-                  "timestamp": {
-                    "example": "",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "id",
-                  "username",
-                  "email"
-                ]
-              },
-              "examples": {}
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "success"
-                      ]
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/user_info"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
-                },
-                "example": {
-                  "status": "success",
-                  "message": "用户{{username}}已成功创建",
-                  "data": {
-                    "id": 69,
-                    "username": "程鑫",
-                    "email": "l7nrqi.q0b24@yahoo.cn",
-                    "register_date": "2025-03-13"
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "summary": "查找特定用户",
-        "deprecated": false,
-        "description": "依据用户id查找特定用户",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "用户id",
-            "required": true,
-            "example": "1624131019",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer",
-                      "description": "ID 编号"
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "名称"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "register_date": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "username",
-                    "email",
-                    "register_date"
-                  ]
-                },
-                "example": {
-                  "id": 36,
-                  "username": "有志国",
-                  "email": "lm1_ilp6@yeah.net",
-                  "register_date": "2025-01-10"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      },
-      "put": {
-        "summary": "更新用户信息",
-        "deprecated": false,
-        "description": "依据用户id更新用户信息",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "example": "",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "example": ""
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": ""
-                  }
-                },
-                "required": [
-                  "username"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "保持不变的ID"
-                        },
-                        "username": {
-                          "description": "更新后的字段",
-                          "type": "string"
-                        },
-                        "email": {
-                          "description": "更新后的字段",
-                          "type": "string"
-                        },
-                        "createdAt": {
-                          "description": "不变的创建时间",
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "updatedAt": {
-                          "description": "服务器生成的更新时间",
-                          "type": "string",
-                          "format": "date-time"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "username",
-                        "email",
-                        "createdAt",
-                        "updatedAt"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "message",
-                    "data"
-                  ]
-                },
-                "example": {
-                  "code": 0,
-                  "message": "用户信息更新成功",
-                  "data": {
-                    "id": "12345",
-                    "username": "zhang cheng",
-                    "email": "zhangsan_new@example.com",
-                    "createdAt": "2023-10-01T12:00:00Z",
-                    "updatedAt": "2023-10-02T14:30:00Z"
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      },
-      "delete": {
-        "summary": "删除用户",
-        "deprecated": false,
-        "description": "根据user_id，删除指定用户",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "example": "",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "被删除的资源ID（用于客户端确认）"
-                        },
-                        "deletedAt": {
-                          "description": "删除时间（可选）",
-                          "type": "string",
-                          "format": "date-time"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "deletedAt"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "data"
-                  ]
-                },
-                "example": {
-                  "message": "用户已成功删除",
-                  "data": {
-                    "id": "12345",
-                    "deletedAt": "2025-08-11T12:00:00Z"
-                  }
-                }
-              }
-            },
-            "headers": {}
-          },
-          "204": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "deletedAt": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "deletedAt"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "message",
-                    "data"
-                  ]
-                },
-                "example": {
-                  "message": "用户已成功删除",
-                  "data": {
-                    "id": "12345",
-                    "deletedAt": "2025-08-11T12:00:00Z"
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
       }
     },
     "/pet": {
@@ -2520,6 +2064,7 @@
             "in": "path",
             "description": "",
             "required": true,
+            "example": 0,
             "schema": {
               "type": "integer",
               "minimum": 1000000000,
@@ -2533,12 +2078,8 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {},
-                "required": [
-                  "01K4PGZ64JW827C1S3AP401EZD"
-                ]
-              },
-              "examples": {}
+                "properties": {}
+              }
             }
           }
         },
@@ -2773,36 +2314,515 @@
         },
         "security": []
       }
+    },
+    "/users": {
+      "get": {
+        "summary": "查找用户列表（获取所有用户）",
+        "deprecated": false,
+        "description": "返回所有用户的列表",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "timestamp",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user_info"
+                  },
+                  "minItems": 5
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Success",
+                    "value": {
+                      "id": 29,
+                      "username": "庞乙萍",
+                      "email": "ts5hvb61@gmail.com",
+                      "register_date": "2026-06-29"
+                    }
+                  },
+                  "2": {
+                    "summary": "Success",
+                    "value": {
+                      "id": 46,
+                      "username": "资乙萍",
+                      "email": "p72k3d65@126.com",
+                      "register_date": "2025-07-16"
+                    }
+                  },
+                  "3": {
+                    "summary": "Success",
+                    "value": {
+                      "id": 65,
+                      "username": "潮国栋",
+                      "email": "v9rlnf57@yeah.net",
+                      "register_date": "2026-01-26"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "添加新用户",
+        "deprecated": false,
+        "description": "创建一个新用户\n⚠️注意：此场景参数应放在body中",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "ID 编号",
+                    "type": "string",
+                    "example": ""
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "example": ""
+                  }
+                },
+                "required": [
+                  "id",
+                  "username",
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user_info"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "status": "success",
+                  "message": "用户{{username}}已成功创建",
+                  "data": {
+                    "id": 69,
+                    "username": "程鑫",
+                    "email": "l7nrqi.q0b24@yahoo.cn",
+                    "register_date": "2025-03-13"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "查找特定用户",
+        "deprecated": false,
+        "description": "依据用户id查找特定用户",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "用户id",
+            "required": true,
+            "example": "1624131019",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID 编号"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "名称"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "register_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "username",
+                    "email",
+                    "register_date"
+                  ]
+                },
+                "example": {
+                  "id": 36,
+                  "username": "有志国",
+                  "email": "lm1_ilp6@yeah.net",
+                  "register_date": "2025-01-10"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "更新用户信息",
+        "deprecated": false,
+        "description": "依据用户id更新用户信息",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": ""
+                  }
+                },
+                "required": [
+                  "username"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "保持不变的ID"
+                        },
+                        "username": {
+                          "description": "更新后的字段",
+                          "type": "string"
+                        },
+                        "email": {
+                          "description": "更新后的字段",
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "description": "不变的创建时间",
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "description": "服务器生成的更新时间",
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "username",
+                        "email",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "message": "用户信息更新成功",
+                  "data": {
+                    "id": "12345",
+                    "username": "zhang cheng",
+                    "email": "zhangsan_new@example.com",
+                    "createdAt": "2023-10-01T12:00:00Z",
+                    "updatedAt": "2023-10-02T14:30:00Z"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除用户",
+        "deprecated": false,
+        "description": "根据user_id，删除指定用户",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "被删除的资源ID（用于客户端确认）"
+                        },
+                        "deletedAt": {
+                          "description": "删除时间（可选）",
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "message": "用户已成功删除",
+                  "data": {
+                    "id": "12345",
+                    "deletedAt": "2025-08-11T12:00:00Z"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "message": "用户已成功删除",
+                  "data": {
+                    "id": "12345",
+                    "deletedAt": "2025-08-11T12:00:00Z"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
     }
   },
   "components": {
     "schemas": {
-      "user_info": {
+      "student info": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "description": "ID 编号"
+            "minimum": 1000000000,
+            "maximum": 9999999999,
+            "title": "学号"
           },
-          "username": {
-            "type": "string",
-            "description": "用户名"
+          "name": {
+            "type": "string"
           },
-          "email": {
-            "type": "string",
-            "description": "邮箱"
+          "gender": {
+            "type": "string"
           },
-          "register_date": {
+          "birthday": {
+            "type": "string"
+          },
+          "joinAt": {
+            "type": "string"
+          },
+          "class": {
             "type": "string",
-            "format": "date-time",
-            "description": "注册日期"
+            "example": " Grade 3 Class 4"
+          },
+          "grade": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "format": "int64",
+            "title": "年级",
+            "example": 3
+          },
+          "level": {
+            "type": "string",
+            "title": "等级",
+            "maxLength": 1,
+            "minLength": 1,
+            "example": "A"
           }
         },
         "required": [
-          "id",
-          "username",
-          "email",
-          "register_date"
+          "name",
+          "gender",
+          "birthday",
+          "joinAt",
+          "class",
+          "level",
+          "grade",
+          "id"
         ]
       },
       "Pet": {
@@ -2998,56 +3018,32 @@
           "$ref": "#/components/schemas/User"
         }
       },
-      "student info": {
+      "user_info": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "minimum": 1000000000,
-            "maximum": 9999999999,
-            "title": "学号"
+            "description": "ID 编号"
           },
-          "name": {
-            "type": "string"
-          },
-          "gender": {
-            "type": "string"
-          },
-          "birthday": {
-            "type": "string"
-          },
-          "joinAt": {
-            "type": "string"
-          },
-          "class": {
+          "username": {
             "type": "string",
-            "example": " Grade 3 Class 4"
+            "description": "用户名"
           },
-          "grade": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 10,
-            "format": "int64",
-            "title": "年级",
-            "example": 3
-          },
-          "level": {
+          "email": {
             "type": "string",
-            "title": "等级",
-            "maxLength": 1,
-            "minLength": 1,
-            "example": "A"
+            "description": "邮箱"
+          },
+          "register_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "注册日期"
           }
         },
         "required": [
-          "name",
-          "gender",
-          "birthday",
-          "joinAt",
-          "class",
-          "level",
-          "grade",
-          "id"
+          "id",
+          "username",
+          "email",
+          "register_date"
         ]
       }
     },
