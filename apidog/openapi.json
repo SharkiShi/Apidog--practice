@@ -1202,7 +1202,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserArray"
+                "$ref": "#/components/schemas/UserArray1"
               }
             }
           },
@@ -2773,6 +2773,12 @@
   },
   "components": {
     "schemas": {
+      "UserArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      },
       "student info": {
         "type": "object",
         "properties": {
@@ -3012,12 +3018,6 @@
           "name": "user"
         }
       },
-      "UserArray": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/User"
-        }
-      },
       "user_info": {
         "type": "object",
         "properties": {
@@ -3045,6 +3045,12 @@
           "email",
           "register_date"
         ]
+      },
+      "UserArray1": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
       }
     },
     "responses": {
