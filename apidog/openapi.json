@@ -1202,7 +1202,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserArray12"
+                "$ref": "#/components/schemas/UserArray123"
               }
             }
           },
@@ -3053,6 +3053,12 @@
         }
       },
       "UserArray12": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      },
+      "UserArray123": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/User"
